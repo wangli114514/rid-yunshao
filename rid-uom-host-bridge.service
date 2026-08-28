@@ -1,0 +1,26 @@
+[Unit]
+Description=RID Cloud UOM host bridge
+Documentation= file:///opt/rid-cloud/UOM_RELAY.md
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+ExecStart=/usr/bin/python3 /usr/local/libexec/rid-uom-host-bridge.py --bind 172.22.0.1 --source-network 172.22.0.0/16 --listen-port 19091 --target-host 127.0.0.1 --target-port 19090
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictRealtime=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0",
+  "catalogVersion": "cn-mainland-uom-2026-08-19",
+  "generatedAt": "2026-08-19",
+  "coordinateSystem": "WGS84",
+  "scope": "中国大陆31个省级行政区",
+  "uom": {
+    "portalUrl": "https://uom.caac.gov.cn/#/main",
+    "standardReference": "https://www.caac.gov.cn/HDJL/YJZJ/202602/P020260212527250365246.pdf",
+    "wmsEndpoint": "https://uom.caac.gov.cn/map/airspace/wms",
+    "queryType": "flyableAirspace",
+    "observedAt": "2026-08-19",
+    "observation": "已登录 UOM 空域查询页观察到的 WMS 图层清单；临时 token 未写入仓库、环境变量或日志",
+    "layerGroups": [
+      {
+        "id": "north-1",
+        "layer": "QGSFKYFW:sf120000,sf130000,sf140000,sf150000",
+        "distCodes": ["120000", "130000", "140000", "150000"]
+      },
+      {
+        "id": "north-east",
+        "layer": "QGSFKYFW:sf210000,sf220000,sf230000",
+        "distCodes": ["210000", "220000", "230000"]
+      },
+      {
+        "id": "east",
+        "layer": "QGSFKYFW:sf310000,sf320000,sf330000,sf340000,sf350000,sf360000,sf370000",
+        "distCodes": ["310000", "320000", "330000", "340000", "350000", "360000", "370000"]
+      },
+      {
+        "id": "central-south",
+        "layer": "QGSFKYFW:sf410000,sf420000,sf430000,sf440000,sf450000,sf460000",
+        "distCodes": ["410000", "420000", "430000", "440000", "450000", "460000"]
+      },
+      {
+        "id": "south-west",
+        "layer": "QGSFKYFW:sf500000,sf510000,sf520000,sf530000,sf540000",
+        "distCodes": ["500000", "510000", "520000", "530000", "540000"]
+      },
+      {
+        "id": "north-west",
+        "layer": "QGSFKYFW:sf610000,sf620000,sf630000,sf640000,sf650000",
+        "distCodes": ["610000", "620000", "630000", "640000", "650000"]
+      }
+    ],
+    "observedDistCodes": [
+      "120000", "130000", "140000", "150000", "210000", "220000", "230000",
+      "310000", "320000", "330000", "340000", "350000", "360000", "370000",
+      "410000", "420000", "430000", "440000", "450000", "460000", "500000",
+      "510000", "520000", "530000", "540000", "610000", "620000", "630000",
+      "640000", "650000"
+    ],
+    "notObservedDistCodes": ["110000"],
+    "accessStatus": "reference_only",
+    "authorizationNote": "公开页面的 WMS 图层观察不能替代 USS/UOM 正式接口授权；正式同步仍需 endpoint、单位 ID、凭据和最终接口文档"
+  },
+  "regions": [
+    {"distCode": "110000", "name": "北京市", "coverageState": "policy_overlay_enabled", "zoneClass": "prohibited", "ruleBasis": "UOM 北京禁飞规则（运营方确认）", "boundaryAsset": "airspace-data/beijing-uom-prohibited-reference.geojson", "authoritative": false},
+    {"distCode": "120000", "name": "天津市", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "130000", "name": "河北省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "140000", "name": "山西省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "150000", "name": "内蒙古自治区", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "210000", "name": "辽宁省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "220000", "name": "吉林省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "230000", "name": "黑龙江省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "310000", "name": "上海市", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "320000", "name": "江苏省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "330000", "name": "浙江省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "340000", "name": "安徽省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "350000", "name": "福建省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "360000", "name": "江西省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "370000", "name": "山东省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "410000", "name": "河南省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "420000", "name": "湖北省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "430000", "name": "湖南省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "440000", "name": "广东省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "450000", "name": "广西壮族自治区", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "460000", "name": "海南省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "500000", "name": "重庆市", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "510000", "name": "四川省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "520000", "name": "贵州省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "530000", "name": "云南省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "540000", "name": "西藏自治区", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "610000", "name": "陕西省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "620000", "name": "甘肃省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "630000", "name": "青海省", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "640000", "name": "宁夏回族自治区", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false},
+    {"distCode": "650000", "name": "新疆维吾尔自治区", "coverageState": "uom_layer_observed", "zoneClass": "unknown", "authoritative": false}
+  ],
+  "beijingRule": {
+    "distCode": "110000",
+    "zoneClass": "prohibited",
+    "label": "北京全市禁飞（UOM 规则参考）",
+    "authoritative": false,
+    "evidence": [
+      "https://uom.caac.gov.cn/#/main",
+      "https://ghzrzyw.beijing.gov.cn/zhengwuxinxi/tzgg/sj/202409/t20240920_3902253.html",
+      "https://mzj.beijing.gov.cn/col/col9984/index.html"
+    ],
+    "boundaryNote": "红色面使用公开行政区参考边界，仅用于本系统风险提示；不是 UOM 高精度空域矢量，也不替代实时审批结果"
+  }
+}

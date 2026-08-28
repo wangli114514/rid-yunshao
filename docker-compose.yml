@@ -1,0 +1,125 @@
+services:
+  rid-monitor:
+    image: rid-yunshao:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    restart: unless-stopped
+    init: true
+    environment:
+      RID_INGEST_TOKEN: "${RID_INGEST_TOKEN:?Create .env and set RID_INGEST_TOKEN}"
+      RID_ADMIN_USER: "${RID_ADMIN_USER:-admin}"
+      RID_ADMIN_PASSWORD: "${RID_ADMIN_PASSWORD:?Create .env and set RID_ADMIN_PASSWORD}"
+      RID_SESSION_SECRET: "${RID_SESSION_SECRET:?Create .env and set RID_SESSION_SECRET}"
+      RID_COOKIE_SECURE: "${RID_COOKIE_SECURE:-1}"
+      AMAP_KEY: "${AMAP_KEY:-}"
+      AMAP_SECURITY_CODE: "${AMAP_SECURITY_CODE:-}"
+      RID_WS_PATH: "${RID_WS_PATH:-/ws}"
+      RID_MONITOR_LAT: "${RID_MONITOR_LAT:-39.9042}"
+      RID_MONITOR_LON: "${RID_MONITOR_LON:-116.4074}"
+      RID_AIRSPACE_IMPORT_MAX_BYTES: "${RID_AIRSPACE_IMPORT_MAX_BYTES:-20971520}"
+      RID_AIRSPACE_MAX_FEATURES: "${RID_AIRSPACE_MAX_FEATURES:-50000}"
+      RID_AIRSPACE_MAX_VERTICES_PER_FEATURE: "${RID_AIRSPACE_MAX_VERTICES_PER_FEATURE:-20000}"
+      RID_AIRSPACE_MAX_TOTAL_VERTICES: "${RID_AIRSPACE_MAX_TOTAL_VERTICES:-1000000}"
+      RID_UOM_WMS_TOKEN: "${RID_UOM_WMS_TOKEN:-}"
+      RID_UOM_WMS_PROXY: "${RID_UOM_WMS_PROXY:-}"
+      RID_UOM_AIRSPACE_ENDPOINT: "${RID_UOM_AIRSPACE_ENDPOINT:-}"
+      RID_UOM_AIRSPACE_CLIENT_ID: "${RID_UOM_AIRSPACE_CLIENT_ID:-}"
+      RID_UOM_AIRSPACE_CREDENTIAL: "${RID_UOM_AIRSPACE_CREDENTIAL:-}"
+    expose:
+      - "18081"
+      - "18082"
+    volumes:
+      - rid-data:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    cpus: 1.0
+    mem_limit: 256m
+    mem_reservation: 64m
+    pids_limit: 128
+    stop_grace_period: 20s
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18081/healthz', timeout=3).close()"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - backend
+      # UOM WMS is an outbound HTTPS dependency; this network publishes no
+      # container ports and leaves the HTTP/WS entrypoint on the isolated edge.
+      - uom-egress
+
+  rid-edge:
+    image: nginx:1.28-alpine
+    platform: linux/amd64
+    restart: unless-stopped
+    depends_on:
+      rid-monitor:
+        condition: service_healthy
+    entrypoint:
+      - nginx
+    command:
+      - -g
+      - daemon off;
+    user: "101:101"
+    ports:
+      - "127.0.0.1:18081:18081"
+    volumes:
+      - ./edge-nginx.conf:/etc/nginx/nginx.conf:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    cpus: 0.25
+    mem_limit: 32m
+    mem_reservation: 8m
+    pids_limit: 32
+    stop_grace_period: 10s
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -q -O /dev/null http://127.0.0.1:18081/healthz || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - frontend
+      - backend
+
+volumes:
+  rid-data:
+    name: tdisplay-s3-rid-data
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
+  uom-egress:
+    driver: bridge
